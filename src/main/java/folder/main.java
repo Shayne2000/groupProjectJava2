@@ -3,20 +3,38 @@
  */
 
 package folder;
+import java.io.IOException;
+import java.util.*;
+import java.nio.file.Path;
 
 /**
  *
  * @author Shayne
  */
 public class main {
+    
+    private static final String inputFolder = "src/main/java/folder/";
 
     public static void main(String[] args) {
         
-        System.out.printf("This is normal printing\n\n");
+        readFile("config_1.txt");
         
-        overridePrintFormat();
-        // Trigger code in another file
-        testClass a = new testClass();
+    }
+    
+    private static Scanner readFile (String name) {
+        Scanner scanObject ;
+        Scanner userInput = new Scanner(System.in);
+        while (true) {
+            try {
+                scanObject = new Scanner(Path.of(inputFolder+name));
+                break;
+            } catch (IOException e) {
+                System.out.printf("%s (The system cannot find the file specified)\n", e);
+                System.out.printf("New file name =   ");
+                name = userInput.nextLine();
+            }
+        }
+        return scanObject;
     }
     
     private static void overridePrintFormat () {
@@ -28,5 +46,3 @@ public class main {
         });
     }
 }
-
-fafafaefaefaefaefadfead
