@@ -1,4 +1,4 @@
-package project2;
+package folder;
 
 /*  6813256 sornchai soontranon
     6813259 hassadin kheawkhum
