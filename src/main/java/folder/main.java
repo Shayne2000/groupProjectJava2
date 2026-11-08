@@ -6,6 +6,7 @@ package folder;
 import java.io.IOException;
 import java.util.*;
 import java.nio.file.Path;
+import java.util.concurrent.CyclicBarrier;
 
 /**
  *
@@ -33,6 +34,8 @@ public class main {
     private final ArrayList<PaymentGateway> paymentGateways = new ArrayList<>();
     private final ArrayList<BrokerThread> brokerThreads = new ArrayList<>();
     private final ArrayList<assessorThread> assessorThreads = new ArrayList<>();
+    
+    private CyclicBarrier barrier;
 
     public void main(String[] args) {
         
@@ -64,6 +67,9 @@ public class main {
         System.out.printf("  Daily tokens     : %d\n", parametors[4]);
         
         
+        
+        barrier = new CyclicBarrier(parametors[5] + parametors[8] + 1);
+        
         for (int i = 0 ; i < parametors[5] ; i ++) {
             brokerThreads.add(new BrokerThread());
         }
@@ -72,7 +78,7 @@ public class main {
         
         
         for (int i = 0 ; i < parametors[8] ; i ++) {
-            assessorThreads.add(new assessorThread("AssessorThread_"+i,parametors[9]));
+            assessorThreads.add(new assessorThread("AssessorThread_"+i,parametors[9], claimGateways, paymentGateways, barrier));
         }
         System.out.printf("BrokerThreads      : %s\n", assessorThreads.toString());
         System.out.printf("  Daily capacity   : %d\n", parametors[9]);
