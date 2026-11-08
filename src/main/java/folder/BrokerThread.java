@@ -1,4 +1,4 @@
-package project2;
+package folder;
 
 import java.util.*;
 import java.util.concurrent.CyclicBarrier;
