@@ -54,7 +54,7 @@ public class main {
         
         
         for (int i = 0 ; i < parametors[1] ; i ++) {
-            claimGateways.add(new ClaimGateway());
+            claimGateways.add(new ClaimGateway(i));
         }
         System.out.printf("ClaimGateways      : %s\n", claimGateways.toString());
         System.out.printf("  Batch size       : %d\n", parametors[2]);
@@ -133,7 +133,8 @@ public class main {
     
     private void reportClaimGatewayDaily () {
         for (int i = 0 ; i < parametors[1] ; i ++) {
-            System.out.printf("ClaimGateway_%d pending claims =%6d", i, claimGateways.get(i).getPendingClaims());
+            ClaimGateway claimGateway = claimGateways.get(i);
+            System.out.printf("%s pending claims =%6d", claimGateway.toString(), claimGateway.getPendingClaims());
         }
     }
     
