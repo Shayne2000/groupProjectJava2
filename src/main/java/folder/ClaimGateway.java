@@ -8,9 +8,11 @@ package project2;
 
 public class ClaimGateway {
     private int pendingClaims;
+    private int gatewayID;
     
-    public ClaimGateway() { 
-        pendingClaims = 0;
+    public ClaimGateway(int gatewayID) { 
+        this.pendingClaims = 0;
+        this.gatewayID = gatewayID;
     }
     
     public synchronized void submitClaims(int claims) {
@@ -33,4 +35,9 @@ public class ClaimGateway {
     }
     
     public synchronized int getPendingClaims() { return pendingClaims; } 
+
+    @Override
+    public String toString() {
+        return "ClaimGateway_" + gatewayID;
+    }
 }
