@@ -62,7 +62,7 @@ public class BrokerThread extends Thread {
                     remainingClaims -= currentBatch;
                 }
                 
-                System.out.printf("%18s  >>  new claims = %4d  split to %s\n", getName(), totalClaims, batches);
+                System.out.printf("new claims =%4d     split to %s\n", totalClaims, batches);
                 
                 printBarrier.await();
                 
@@ -73,8 +73,8 @@ public class BrokerThread extends Thread {
 
                     selectedGateway.submitClaims(currentBatch);
                     
-                    System.out.printf("%18s  >>  submit %2d claims to %-18s  %15s pending claims = %4d\n", 
-                            getName(), currentBatch, selectedGateway.toString(), selectedGateway.toString(), selectedGateway.getPendingClaims());
+                    System.out.printf("submit %2d claims to %-18s  %15s pending claims = %4d\n", 
+                            currentBatch, selectedGateway.toString(), selectedGateway.toString(), selectedGateway.getPendingClaims());
                 }
                 endBarrier.await();
             }        
