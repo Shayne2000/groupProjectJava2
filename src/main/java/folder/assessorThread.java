@@ -18,6 +18,7 @@ public class assessorThread extends Thread {
     private final int maxToken;
     private CyclicBarrier barrier;
     private int pendingPayment;
+    private int allPaymentSuccess;
     
     private final Random random = new Random();
     
@@ -27,6 +28,7 @@ public class assessorThread extends Thread {
         paymentGateways = p;
         barrier = b;
         pendingPayment = 0;
+        allPaymentSuccess = 0;
         super(name);
     }
     
@@ -61,6 +63,7 @@ public class assessorThread extends Thread {
         
         int successfillPayments = paymentGateway.recivedPaymentTokens(pendingPayment);
         pendingPayment -= successfillPayments;
+        allPaymentSuccess += successfillPayments;
         
         System.out.printf("issue%4d payments to %s      %s tokens =%5d\n", successfillPayments, paymentGateway.toString(), paymentGateway.toString(), paymentGateway.getTokens());
     }
@@ -72,5 +75,9 @@ public class assessorThread extends Thread {
             System.out.printf("Thrown from barrier : %s\n", e);
         }
             
+    }
+    
+    public int getSuccessfillPayments () {
+        return allPaymentSuccess;
     }
 }

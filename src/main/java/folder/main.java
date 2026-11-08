@@ -103,7 +103,9 @@ public class main {
             }
             
         }
-        
+        printSummary();
+        joinAllThread();
+        System.exit(0); 
     }
     
     private Scanner createScanner (String name) {
@@ -161,6 +163,28 @@ public class main {
             System.out.printf("Thrown from barrier : %s\n", e);
         }
             
+    }
+    
+    private void joinAllThread () {
+        try {
+            for (BrokerThread b : brokerThreads) {
+                b.join();
+            }
+            for (assessorThread a : assessorThreads) {
+                a.join();
+            }
+        }catch (InterruptedException e) {
+            
+        }
+    }
+    
+    public void printSummary() {
+        System.out.printf("\n");
+        System.out.printf("=================================================================\n");
+        System.out.printf("Summary\n");
+        for (int i = 0 ; i < assessorThreads.size() ; i ++) {
+            System.out.printf("AssessorThread_%d successful payments =%6d\n", i, assessorThreads.get(i).getSuccessfillPayments());
+        }
     }
     
     private void overridePrintFormat () {
