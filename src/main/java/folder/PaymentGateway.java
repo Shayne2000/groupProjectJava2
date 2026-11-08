@@ -59,6 +59,14 @@ public class PaymentGateway {
         }
         this.dailyTokenLimit = dailyTokenLimit;
     }
+    
+    public int recivedPaymentTokens (int tokens) {
+        if (tokens > remainingTokens) {
+            tokens = remainingTokens;
+        }
+        remainingTokens -= tokens;
+        return tokens;
+    }
 
     @Override
     public String toString() {

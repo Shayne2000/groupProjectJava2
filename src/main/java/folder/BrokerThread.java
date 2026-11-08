@@ -76,7 +76,10 @@ public class BrokerThread extends Thread {
                     System.out.printf("submit %2d claims to %-18s  %15s pending claims = %4d\n", 
                             currentBatch, selectedGateway.toString(), selectedGateway.toString(), selectedGateway.getPendingClaims());
                 }
-                endBarrier.await();
+                for (int i = 0 ; i < 4 ; i ++) {
+                    endBarrier.await();
+                }
+                
             }        
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

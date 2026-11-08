@@ -47,7 +47,7 @@ public class assessorThread extends Thread {
     }
     
     private int approvingClaims () {
-        int claimGatewayIndex = random.nextInt(0,claimGateways.size()+1);
+        int claimGatewayIndex = random.nextInt(0,claimGateways.size());
         ClaimGateway claimGateway = claimGateways.get(claimGatewayIndex);
         int approvedClaim = claimGateway.approveClaims(random.nextInt(0,maxToken+1));
         
@@ -56,8 +56,13 @@ public class assessorThread extends Thread {
     }
     
     private void issuePayments () {
-        int paymentGatewayIndex = random.nextInt(0,paymentGateways.size()+1);
+        int paymentGatewayIndex = random.nextInt(0,paymentGateways.size());
         PaymentGateway paymentGateway = paymentGateways.get(paymentGatewayIndex);
+        
+        int successfillPayments = paymentGateway.recivedPaymentTokens(pendingPayment);
+        pendingPayment -= successfillPayments;
+        
+        System.out.printf("issue%4d payments to %s      %s tokens =%5d\n", successfillPayments, paymentGateway.toString(), paymentGateway.toString(), paymentGateway.getTokens());
     }
     
     private void purse () {
