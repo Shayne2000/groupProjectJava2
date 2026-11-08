@@ -32,7 +32,7 @@ public class main {
     private final ArrayList<ClaimGateway> claimGateways = new ArrayList<>();
     private final ArrayList<PaymentGateway> paymentGateways = new ArrayList<>();
     private final ArrayList<BrokerThread> brokerThreads = new ArrayList<>();
-    private final ArrayList<AssessorThread> assessorThreads = new ArrayList<>();
+    private final ArrayList<assessorThread> assessorThreads = new ArrayList<>();
 
     public void main(String[] args) {
         
@@ -58,21 +58,21 @@ public class main {
        
         
         for (int i = 0 ; i < parametors[3] ; i ++) {
-            claimGateways.add(new PaymentGateway());
+            paymentGateways.add(new PaymentGateway());
         }
         System.out.printf("PaymentGateways    : %s\n", paymentGateways.toString());
         System.out.printf("  Daily tokens     : %d\n", parametors[4]);
         
         
         for (int i = 0 ; i < parametors[5] ; i ++) {
-            claimGateways.add(new BrokerThread());
+            brokerThreads.add(new BrokerThread());
         }
         System.out.printf("BrokerThreads      : %s\n", brokerThreads.toString());
         System.out.printf("  Daily claims     : min = %d, max = %d\n", parametors[6], parametors[7]);
         
         
         for (int i = 0 ; i < parametors[8] ; i ++) {
-            claimGateways.add(new AssessorThread());
+            assessorThreads.add(new assessorThread("AssessorThread_"+i,parametors[9]));
         }
         System.out.printf("BrokerThreads      : %s\n", assessorThreads.toString());
         System.out.printf("  Daily capacity   : %d\n", parametors[9]);
@@ -82,8 +82,10 @@ public class main {
         
         for (int day = 1 ; day <= parametors[0] ; day ++) {
             System.out.printf("Day %d\n", day);
+            
             reportClaimGatewayDaily();
             resetPaymentGatewayDaily();
+            
             System.out.printf("\n");
         }
         
