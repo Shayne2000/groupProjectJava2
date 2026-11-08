@@ -13,9 +13,9 @@ import java.nio.file.Path;
  */
 public class main {
     
-    private static final String inputFolder = "src/main/java/folder/";
+    private final String inputFolder = "src/main/java/folder/";
     
-    private static int[] parametors = new int[10];
+    private int[] parametors = new int[10];
     /*
     0) day
     1) claimGateWay_N;
@@ -28,8 +28,13 @@ public class main {
     8) assessorThread_N;
     9) assessorThread_max;
     */
+    
+    private final ArrayList<ClaimGateway> claimGateways = new ArrayList<>();
+    private final ArrayList<PaymentGateway> paymentGateways = new ArrayList<>();
+    private final ArrayList<BrokerThread> brokerThreads = new ArrayList<>();
+    private final ArrayList<AssessorThread> assessorThreads = new ArrayList<>();
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         
         Scanner fileReader = createScanner("config_1.txt");
         
@@ -44,28 +49,28 @@ public class main {
         System.out.printf("=================================== Parameters ====================================\n");
         System.out.printf("Days of simulation : %d\n", parametors[0]);
         
-        ArrayList<ClaimGateway> claimGateways = new ArrayList<>();
+        
         for (int i = 0 ; i < parametors[1] ; i ++) {
             claimGateways.add(new ClaimGateway());
         }
         System.out.printf("ClaimGateways      : %s\n", claimGateways.toString());
         System.out.printf("  Batch size       : %d\n", parametors[2]);
        
-        ArrayList<PaymentGateway> paymentGateways = new ArrayList<>();
+        
         for (int i = 0 ; i < parametors[3] ; i ++) {
             claimGateways.add(new PaymentGateway());
         }
         System.out.printf("PaymentGateways    : %s\n", paymentGateways.toString());
         System.out.printf("  Daily tokens     : %d\n", parametors[4]);
         
-        ArrayList<BrokerThread> brokerThreads = new ArrayList<>();
+        
         for (int i = 0 ; i < parametors[5] ; i ++) {
             claimGateways.add(new BrokerThread());
         }
         System.out.printf("BrokerThreads      : %s\n", brokerThreads.toString());
         System.out.printf("  Daily claims     : min = %d, max = %d\n", parametors[6], parametors[7]);
         
-        ArrayList<AssessorThread> assessorThreads = new ArrayList<>();
+        
         for (int i = 0 ; i < parametors[8] ; i ++) {
             claimGateways.add(new AssessorThread());
         }
@@ -84,7 +89,7 @@ public class main {
         
     }
     
-    private static Scanner createScanner (String name) {
+    private Scanner createScanner (String name) {
         Scanner scanObject ;
         Scanner userInput = new Scanner(System.in);
         while (true) {
@@ -100,7 +105,7 @@ public class main {
         return scanObject;
     }
     
-    private static String skipCommentedLine (Scanner s) {
+    private String skipCommentedLine (Scanner s) {
         String data;
         while (true) {
             data = s.nextLine();
@@ -110,7 +115,7 @@ public class main {
         }
     }
     
-    private static void handleInputInt (String line, int[] expectedInt) {
+    private void handleInputInt (String line, int[] expectedInt) {
         String[] data = line.split(",");
         
         for (int i = 0 ; i < expectedInt.length ; i++) {
@@ -118,13 +123,13 @@ public class main {
         }
     }
     
-    private static void reportClaimGatewayDaily () {
+    private void reportClaimGatewayDaily () {
         for (int i = 0 ; i < parametors[1] ; i ++) {
             System.out.printf("ClaimGateway_%d pending claims =%6d", i, claimGateways.get(i).getPendingClaims());
         }
     }
     
-    private static void resetPaymentGatewayDaily () {
+    private void resetPaymentGatewayDaily () {
         for (int i = 0 ; i < parametors[3] ; i++) {
             if (paymentGateways.get(i).getTokens() != 0) {
                 System.out.printf("reset PaymentGateway_%d tokens =%6d\n", i, parametors[4]);
@@ -132,7 +137,7 @@ public class main {
         }
     }
     
-    private static void overridePrintFormat () {
+    private void overridePrintFormat () {
         System.setOut(new java.io.PrintStream(System.out) {
             @Override
             public java.io.PrintStream printf(String format, Object... args) {
